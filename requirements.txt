@@ -1,0 +1,1 @@
+# La solución base usa únicamente la biblioteca estándar de Python.
