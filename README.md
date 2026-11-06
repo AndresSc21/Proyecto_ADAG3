@@ -4,8 +4,8 @@ Primera entrega de **Análisis y Diseño de Algoritmos 2026-B**.
 
 Integrantes:
 
-- Andres Felipe Salazar
-- Manuel Alejandro Hurtado
+- Andres Felipe Salazar - Grupo 3
+- Manuel Alejandro Hurtado - Grupo 1
 
 ## Alcance
 
