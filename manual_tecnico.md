@@ -62,6 +62,8 @@ El adaptador también acepta `entrada_G3_mochila_20_nodos.json`. Convierte
 `etapas` en objetos de aceleración, convierte sus `variaciones_auditoria` en
 interacciones y usa los presupuestos declarados en `parametros`. El presupuesto
 de aceleración es 72 y el presupuesto conjunto es 100 en este ejemplo.
+El resumen legible se genera con `scripts/generate_summary.py` en formatos CSV
+y Markdown; el JSON conserva la traza detallada de todos los estados DP.
 
 ## Benchmark
 

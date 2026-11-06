@@ -129,11 +129,13 @@ def audit_greedy(
             {
                 "interaction": best.name,
                 "marginal_risks": sorted(marginal),
+                "cost": best.cost,
                 "covered_after": sorted(covered),
             }
         )
     return {
         "selected": selected,
+        "total_cost": sum(item.cost for item in selected),
         "covered": covered,
         "trace": trace,
         "feasible": True,

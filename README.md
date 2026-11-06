@@ -75,6 +75,13 @@ python scripts/run_case.py entrada_G3_mochila_20_nodos.json > resultados/entrada
 ```
 
 La evidencia generada está en `resultados/entrada_G3_mochila_20_nodos.json`.
+Para verla en forma de tabla, ejecutar:
+
+```powershell
+python scripts/generate_summary.py entrada_G3_mochila_20_nodos.json `
+  --csv resultados/entrada_G3_mochila_20_nodos_resumen.csv `
+  --markdown resultados/entrada_G3_mochila_20_nodos_resumen.md
+```
 
 ## Formato de caso
 
