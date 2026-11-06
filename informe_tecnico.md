@@ -191,6 +191,19 @@ La tabla legible está en
 `resultados/entrada_G3_mochila_20_nodos_resumen.md` y la traza completa de
 1.460 estados DP en `resultados/entrada_G3_mochila_20_nodos.json`.
 
+### 7.1 Tabla resumen para la entrega
+
+| Sección | Seleccionados | Costo | Reducción | Duración | Factible |
+|---|---|---:|---:|---:|:---:|
+| Aceleración | E02, E03, E04, E06, E08, E12 | 72 | 55 | 446 | Sí |
+| Auditoría voraz | E18_completa, E19_completa, E20_completa, E01_parcial | 24 | — | — | Sí |
+| Auditoría ponderada | E01_parcial, E12_completa, E13_completa, E18_parcial, E11_completa | 25 | — | — | Sí |
+| Presupuesto conjunto | Auditoría: E01_parcial, E18_completa, E19_completa, E20_completa; aceleración: E03, E04, E06, E08, E12, E16 | 100 | 58 | 443 | Sí |
+
+El tiempo medido fue aproximadamente `0.012460` segundos y se registraron
+1.460 estados de programación dinámica. La traza completa se entrega en el
+repositorio porque ocuparía muchas páginas en el informe PDF.
+
 Los datos privados de la profesora no se incluyen en el repositorio. La
 profesora puede probarlos con el mismo adaptador, sin modificar la lógica:
 
