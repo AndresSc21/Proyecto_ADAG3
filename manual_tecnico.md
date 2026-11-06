@@ -58,6 +58,11 @@ de las trazas. `run_cases.py` ejecuta todos los JSON de la carpeta y genera una
 evidencia consolidada. Si la carpeta no contiene casos oficiales, el comando
 termina con un mensaje explícito y no fabrica resultados.
 
+El adaptador también acepta `entrada_G3_mochila_20_nodos.json`. Convierte
+`etapas` en objetos de aceleración, convierte sus `variaciones_auditoria` en
+interacciones y usa los presupuestos declarados en `parametros`. El presupuesto
+de aceleración es 72 y el presupuesto conjunto es 100 en este ejemplo.
+
 ## Benchmark
 
 ```powershell

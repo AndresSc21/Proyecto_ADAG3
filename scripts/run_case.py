@@ -19,6 +19,40 @@ from src.ruta import (
 
 def _load_case(path: str) -> dict[str, object]:
     data = json.loads(Path(path).read_text(encoding="utf-8-sig"))
+    if "parametros" in data and "etapas" in data:
+        parameters = data["parametros"]
+        risks = [item["id"] for item in data["categorias_riesgo"]]
+        stages = [
+            {
+                "name": item["id"],
+                "duration": item["duracion_normal"],
+                "cost": item["costo_aceleracion"],
+                "reduction": item["reduccion_tiempo_si_acelera"],
+            }
+            for item in data["etapas"]
+        ]
+        interactions = []
+        for stage in data["etapas"]:
+            for variation in stage["variaciones_auditoria"]:
+                interactions.append(
+                    {
+                        "name": f"{stage['id']}_{variation['id']}",
+                        "risks": variation["riesgos_cubiertos"],
+                        "cost": variation["costo"],
+                    }
+                )
+        return {
+            "name": Path(path).stem,
+            "budget": parameters["presupuesto_aceleracion_B"],
+            "combined_budget": parameters["presupuesto_conjunto_aceleracion_y_auditoria"],
+            "stages": stages,
+            "risks": risks,
+            "interactions": interactions,
+            "edges": [
+                [edge["origen"], edge["destino"]] for edge in data.get("flujo", [])
+            ],
+            "source_format": "entrada_G3",
+        }
     required = ("budget", "stages", "risks", "interactions")
     missing = [key for key in required if key not in data]
     if missing:
@@ -54,6 +88,12 @@ def build_result(path: str) -> dict[str, object]:
     acceleration = accelerate_exact(stages, data["budget"])
     audit = audit_greedy(interactions, risks)
     weighted_audit = audit_weighted_cost(interactions, risks)
+    combined = combined_budget(
+        stages,
+        interactions,
+        risks,
+        data.get("combined_budget", data["budget"]),
+    )
     elapsed = time.perf_counter() - start
     result = {
         "name": data.get("name", Path(path).stem),
@@ -62,9 +102,14 @@ def build_result(path: str) -> dict[str, object]:
         "acceleration": acceleration,
         "audit": audit,
         "weighted_audit": weighted_audit,
-        "combined_budget": combined_budget(stages, interactions, risks, data["budget"]),
+        "combined_budget": combined,
         "verification": {
             "acceleration_budget_respected": acceleration["total_cost"] <= data["budget"],
+            "combined_budget_respected": (
+                combined.get("feasible", False)
+                and combined["total_cost"]
+                <= data.get("combined_budget", data["budget"])
+            ),
             "audit_covers_all_risks": audit["feasible"] and audit["covered"] == risks,
             "weighted_audit_covers_all_risks": (
                 weighted_audit["feasible"] and weighted_audit["covered"] == risks

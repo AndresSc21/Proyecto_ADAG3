@@ -66,6 +66,16 @@ Para comparar el DAG exacto con una instancia donde la heurística no es óptima
 python scripts/validate_dag.py
 ```
 
+El archivo `entrada_G3_mochila_20_nodos.json` es un caso de ejemplo
+suministrado para probar el algoritmo. Acepta el formato específico de la
+entrada y se puede reproducir con:
+
+```powershell
+python scripts/run_case.py entrada_G3_mochila_20_nodos.json > resultados/entrada_G3_mochila_20_nodos.json
+```
+
+La evidencia generada está en `resultados/entrada_G3_mochila_20_nodos.json`.
+
 ## Formato de caso
 
 ```json
@@ -98,3 +108,5 @@ python scripts/validate_dag.py
 - `scripts/benchmark.py`: experimentación con tamaños crecientes.
 - `tests/`: pruebas automatizadas.
 - `data/casos_profesora/`: ubicación reservada para los casos oficiales.
+- `entrada_G3_mochila_20_nodos.json`: entrada de ejemplo suministrada.
+- `resultados/entrada_G3_mochila_20_nodos.json`: evidencia reproducible del ejemplo.

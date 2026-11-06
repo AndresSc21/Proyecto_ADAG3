@@ -221,30 +221,34 @@ def audit_weighted_cost(
 def audit_weighted_exact(
     interactions: Iterable[Interaction], risks: Iterable[str]
 ) -> dict[str, object]:
-    """Encuentra la cobertura de costo mínimo por enumeración de subconjuntos."""
+    """Encuentra la cobertura de costo mínimo con DP sobre máscaras de riesgos."""
     candidates = list(interactions)
     universe = set(risks)
     if not universe:
         return {"selected": [], "covered": set(), "total_cost": 0, "feasible": True}
     if set().union(*(item.risks for item in candidates)) < universe:
         return {"selected": [], "covered": set(), "total_cost": 0, "feasible": False}
-    best: tuple[int, tuple[int, ...]] | None = None
-    for size in range(1, len(candidates) + 1):
-        for indexes in combinations(range(len(candidates)), size):
-            covered = set().union(*(candidates[i].risks for i in indexes))
-            if covered >= universe:
-                cost = sum(candidates[i].cost for i in indexes)
-                if best is None or cost < best[0]:
-                    best = (cost, indexes)
-    if best is None:
+    ordered_risks = sorted(universe)
+    positions = {risk: index for index, risk in enumerate(ordered_risks)}
+    full_mask = (1 << len(ordered_risks)) - 1
+    states: dict[int, tuple[int, tuple[int, ...]]] = {0: (0, ())}
+    for index, item in enumerate(candidates):
+        item_mask = sum(1 << positions[risk] for risk in item.risks if risk in positions)
+        for mask, (cost, selected_indexes) in list(states.items()):
+            new_mask = mask | item_mask
+            new_value = (cost + item.cost, selected_indexes + (index,))
+            if new_mask not in states or new_value < states[new_mask]:
+                states[new_mask] = new_value
+    if full_mask not in states:
         return {"selected": [], "covered": set(), "total_cost": 0, "feasible": False}
-    selected = [candidates[i] for i in best[1]]
+    best_cost, indexes = states[full_mask]
+    selected = [candidates[i] for i in indexes]
     return {
         "selected": selected,
         "covered": set().union(*(item.risks for item in selected)),
-        "total_cost": best[0],
+        "total_cost": best_cost,
         "feasible": True,
-        "complexity": f"O(2^{len(candidates)}*{len(universe)})",
+        "complexity": f"O({len(candidates)}*2^{len(universe)})",
     }
 
 

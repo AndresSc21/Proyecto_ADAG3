@@ -6,5 +6,4 @@ venv/
 env/
 *.egg-info/
 
-data/casos_profesora/*.json
 resultados/casos_profesora.json

@@ -7,6 +7,15 @@ from scripts.run_case import build_result
 
 
 class RunCaseTests(unittest.TestCase):
+    def test_example_input_format_is_supported(self):
+        path = Path(__file__).parents[1] / "entrada_G3_mochila_20_nodos.json"
+        result = build_result(str(path))
+
+        self.assertEqual(len(result["acceleration"]["trace"]), 20 * 73)
+        self.assertTrue(result["verification"]["acceleration_budget_respected"])
+        self.assertTrue(result["verification"]["combined_budget_respected"])
+        self.assertTrue(result["verification"]["audit_covers_all_risks"])
+
     def test_build_result_is_json_serializable_and_verifies_constraints(self):
         case = {
             "name": "prueba",
