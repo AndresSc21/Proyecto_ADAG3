@@ -13,8 +13,8 @@ También se pueden ejecutar todos juntos y guardar la evidencia:
 python scripts/run_cases.py data/casos_profesora --output resultados/casos_profesora.json
 ```
 
-La carpeta actualmente no contiene casos oficiales; por eso la evidencia por
-caso no puede completarse hasta recibirlos.
+La carpeta no contiene datos privados. La evidencia reproducible del proyecto
+se genera con el caso de ejemplo ubicado en la raíz.
 
 El archivo `entrada_G3_mochila_20_nodos.json` que está en la raíz es un caso de
 ejemplo suministrado para probar el algoritmo; no representa datos privados de

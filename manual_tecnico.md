@@ -81,8 +81,9 @@ hardware distinto como si fueran una prueba de complejidad formal.
 - `accelerate_exact`: tabla DP, reconstrucción y traza.
 - `audit_greedy`: Set Cover voraz y ganancias marginales.
 - `audit_weighted_cost`: variante costo por riesgo nuevo.
-- `audit_weighted_exact`: cobertura ponderada exacta por enumeración, usada para
-  calcular el costo mínimo de auditoría en el presupuesto conjunto.
+- `audit_weighted_exact`: cobertura ponderada exacta con programación dinámica
+  sobre máscaras de riesgos, usada para calcular el costo mínimo de auditoría
+  en el presupuesto conjunto.
 - `combined_budget`: auditoría exacta seguida de aceleración con el presupuesto
   restante.
 - `critical_path_duration`: ruta crítica de un DAG en orden topológico.
@@ -110,8 +111,9 @@ no alcanza la solución exacta.
 - La solución DAG exacta es exponencial y solo es adecuada para instancias
   pequeñas; la heurística no garantiza optimalidad.
 - La auditoría reporta inviabilidad cuando algún riesgo no puede cubrirse.
-- La cobertura ponderada exacta también es exponencial; el algoritmo operativo
-  para casos grandes es el voraz ponderado.
+- La cobertura ponderada exacta usa `O(m * 2^r)` estados, donde `m` es el
+  número de interacciones y `r` el número de riesgos; para muchos riesgos se
+  debe usar el algoritmo operativo voraz ponderado.
 - Los tiempos dependen del equipo; la evidencia debe conservar la configuración
   usada.
 - Los casos oficiales deben agregarse sin incluir información privada fuera del

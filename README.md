@@ -20,7 +20,9 @@ La solución implementa:
 7. Trazas reproducibles de decisiones, costos, reducciones y cobertura.
 8. Generación de instancias sintéticas y medición de tiempos.
 
-Los casos privados de la profesora todavía no han sido entregados. Cuando estén disponibles, deben guardarse como JSON en `data/casos_profesora/` y ejecutarse con el mismo comando, sin modificar la lógica.
+Los datos privados de la profesora no forman parte del repositorio. El
+adaptador acepta el mismo formato de caso y puede ejecutarlos sin modificar la
+lógica del algoritmo.
 
 ## Requisitos
 
@@ -114,6 +116,6 @@ python scripts/generate_summary.py entrada_G3_mochila_20_nodos.json `
 - `scripts/validate_dag.py`: comparación exacta/heurística del DAG.
 - `scripts/benchmark.py`: experimentación con tamaños crecientes.
 - `tests/`: pruebas automatizadas.
-- `data/casos_profesora/`: ubicación reservada para los casos oficiales.
+- `data/casos_profesora/`: ubicación opcional para casos externos autorizados.
 - `entrada_G3_mochila_20_nodos.json`: entrada de ejemplo suministrada.
 - `resultados/entrada_G3_mochila_20_nodos.json`: evidencia reproducible del ejemplo.

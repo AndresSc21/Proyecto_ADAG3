@@ -1,6 +1,6 @@
 # Resumen del caso G3
 
-- Tiempo de ejecución: `0.012460` segundos
+- Tiempo de ejecución: `0.014287` segundos
 - Estados DP registrados: `1460`
 
 | Sección | Seleccionados | Costo | Reducción | Duración | Factible |

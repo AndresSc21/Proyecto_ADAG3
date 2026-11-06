@@ -135,9 +135,13 @@ La variante ponderada por costo elige la interacción que minimiza:
 `costo(interacción) / cantidad de riesgos nuevos cubiertos`.
 
 La combinación simultánea de aceleración y auditoría usa un presupuesto único:
-primero calcula la cobertura ponderada de costo mínimo por enumeración y luego
-ejecuta la mochila con el presupuesto restante. Esto produce la solución exacta
-para instancias pequeñas y deja explícito el costo de auditoría.
+primero calcula la cobertura ponderada de costo mínimo mediante programación
+dinámica sobre máscaras de riesgos y luego ejecuta la mochila con el
+presupuesto restante. Si `m` es el número de interacciones y `r` el número de
+riesgos, la cobertura exacta usa `O(m 2^r)` tiempo y `O(2^r)` memoria. La
+mochila restante usa `O(nB')`, donde `B'` es el presupuesto después de auditar.
+Esto produce la solución exacta cuando el número de riesgos permite manejar las
+máscaras.
 
 Para un DAG, `critical_path_duration` calcula la ruta crítica por orden
 topológico en `O(n+m)`. `dag_exact` enumera subconjuntos en
@@ -168,10 +172,35 @@ con semilla fija y guarda tiempos en CSV. La gráfica final debe elaborarse a
 partir de esos datos y contrastarse con `nB`, no solo con `n`, porque esa es la
 variable teórica de la programación dinámica.
 
-## 7. Evidencia pendiente
+## 7. Evidencia reproducible
 
-Los casos oficiales de la profesora aún no fueron recibidos. Al recibirlos,
-deben ejecutarse sin cambiar `src/ruta.py` y anexarse por caso:
+El caso de ejemplo suministrado para el grupo está en
+`entrada_G3_mochila_20_nodos.json`. Su ejecución produce:
+
+- 20 etapas y 12 categorías de riesgo;
+- presupuesto de aceleración `B = 72`;
+- presupuesto conjunto `B = 100`;
+- aceleración seleccionada: `E02, E03, E04, E06, E08, E12`;
+- costo de aceleración `72`, reducción `55` y duración `446`;
+- auditoría voraz de costo `24`, cubriendo las 12 categorías;
+- auditoría ponderada de costo `25`, cubriendo las 12 categorías;
+- solución conjunta de costo total `100`, reducción `58` y duración `443`;
+- solución DAG exacta de duración `446` y heurística DAG de duración `447`.
+
+La tabla legible está en
+`resultados/entrada_G3_mochila_20_nodos_resumen.md` y la traza completa de
+1.460 estados DP en `resultados/entrada_G3_mochila_20_nodos.json`.
+
+Los datos privados de la profesora no se incluyen en el repositorio. La
+profesora puede probarlos con el mismo adaptador, sin modificar la lógica:
+
+1. salida;
+2. tiempo;
+3. traza de estados y decisiones DP;
+4. etapas aceleradas y costo;
+5. selección de auditoría y ganancias marginales;
+6. verificación de cobertura;
+7. resultado de la variante ponderada.
 
 1. salida;
 2. tiempo;
